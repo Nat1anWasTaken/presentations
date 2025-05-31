@@ -8,7 +8,7 @@ const publicDir = path.resolve(__dirname, "../public/slides");
 function installDependencies(slidePath: string) {
   try {
     console.log(`📥 Installing dependencies for ${slidePath}`);
-    execSync("pnpm install --frozen-lockfile", {
+    execSync(`pnpm install --frozen-lockfile`, {
       cwd: slidePath,
       stdio: "inherit",
     });
@@ -41,13 +41,10 @@ async function buildSlide(slideName: string): Promise<void> {
 
     installDependencies(slidePath);
 
-    execSync(
-      `pnpm dlx @slidev/cli build slides.md --base /slides/${slideName}/ `,
-      {
-        cwd: slidePath,
-        stdio: "inherit",
-      }
-    );
+    execSync(`pnpm run build --base /slides/${slideName}/`, {
+      cwd: slidePath,
+      stdio: "inherit",
+    });
 
     await removeDir(targetPath);
     await mkdir(path.dirname(targetPath), { recursive: true });
