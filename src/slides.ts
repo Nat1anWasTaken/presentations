@@ -10,12 +10,7 @@ export const slides: Slide[] = [
   {
     title: "Music Presentation 2024/10/24",
     description: "A presentation about music, covering various topics.",
-    href: "slides/music-presentation-1024",
-  },
-  {
-    title: "Physics Presentation 2024/10/16",
-    description: "The physics report for Group 11 on 2024/10/16.",
-    href: "slides/physics-report-2024-10-16",
+    href: "slides/music-presentations-1024",
   },
   {
     title: "自主學習報告",
