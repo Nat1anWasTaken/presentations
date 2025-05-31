@@ -1,5 +1,5 @@
 import { execSync } from "child_process";
-import { cp, mkdir, readdir, rm, stat } from "fs/promises";
+import { cp, mkdir, rm } from "fs/promises";
 import path from "path";
 
 // Base folders
@@ -14,54 +14,36 @@ async function removeDir(targetPath: string) {
   }
 }
 
-async function buildSlide(slideName: string) {
+async function buildSlide(slideName: string): Promise<void> {
   const slidePath = path.join(slidesDir, slideName);
   const distPath = path.join(slidePath, "dist");
   const targetPath = path.join(publicDir, slideName);
 
   console.log(`\n📦 Building slide: ${slideName}`);
 
-  // Remove old dist folder if exists
-  await removeDir(distPath);
+  try {
+    await removeDir(distPath);
 
-  // Build with base path
-  execSync(`pnpm slidev build --base /slides/${slideName}/`, {
-    cwd: slidePath,
-    stdio: "inherit",
-  });
+    // 🧩 Step 1: Install local dependencies for this slide
+    console.log(`📥 Installing dependencies for ${slideName}`);
+    execSync("pnpm install --frozen-lockfile", {
+      cwd: slidePath,
+      stdio: "inherit",
+    });
 
-  // Remove old public target folder
-  await removeDir(targetPath);
+    // 🛠️ Step 2: Build with Slidev
+    execSync(`pnpm build --base /slides/${slideName}/`, {
+      cwd: slidePath,
+      stdio: "inherit",
+    });
 
-  // Ensure parent folder exists
-  await mkdir(path.dirname(targetPath), { recursive: true });
+    // 🧹 Step 3: Copy to public
+    await removeDir(targetPath);
+    await mkdir(path.dirname(targetPath), { recursive: true });
+    await cp(distPath, targetPath, { recursive: true });
 
-  // Copy new dist to public/slides/{slide}
-  await cp(distPath, targetPath, { recursive: true });
-
-  console.log(`✅ Done: /slides/${slideName}/`);
-}
-
-async function main() {
-  const entries = await readdir(slidesDir);
-
-  const slideDirs = [];
-  for (const entry of entries) {
-    const fullPath = path.join(slidesDir, entry);
-    const isDir = (await stat(fullPath)).isDirectory();
-    if (isDir) {
-      slideDirs.push(entry);
-    }
+    console.log(`✅ Built: /slides/${slideName}/`);
+  } catch (error) {
+    console.error(`❌ Failed to build ${slideName}:`, error);
   }
-
-  for (const slideName of slideDirs) {
-    await buildSlide(slideName);
-  }
-
-  console.log("\n🎉 All slides built and copied to public.");
 }
-
-main().catch((err) => {
-  console.error("❌ Failed:", err);
-  process.exit(1);
-});
