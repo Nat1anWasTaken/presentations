@@ -4,7 +4,7 @@ import path from "path";
 
 // Base folders
 const slidesDir = path.resolve(__dirname, "../slides");
-const publicDir = path.resolve(__dirname, "../apps/web/public/slides");
+const publicDir = path.resolve(__dirname, "../public/slides");
 
 async function removeDir(targetPath: string) {
   try {
