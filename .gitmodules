@@ -1,0 +1,9 @@
+[submodule "slides/music-presentations-1024"]
+	path = slides/music-presentations-1024
+	url = https://github.com/Nat1anWasTaken/music-presentation-1024
+[submodule "slides/physics-report-2024-10-16"]
+	path = slides/physics-report-2024-10-16
+	url = https://github.com/Nat1anWasTaken/physics-report-2024-10-16.git
+[submodule "slides/self-learning-presentation"]
+	path = slides/self-learning-presentation
+	url = https://github.com/Nat1anWasTaken/self-learning-presentation.git
