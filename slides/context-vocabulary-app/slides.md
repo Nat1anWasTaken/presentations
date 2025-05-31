@@ -2,7 +2,6 @@
 title: 悄悄偷走兩萬元｜語境生成式單字學習平台
 subtitle: 第五屆中學生黑客松｜草案簡報
 clickToCopy: true
-theme: ./theme
 ---
 
 # 團隊介紹
