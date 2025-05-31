@@ -41,10 +41,13 @@ async function buildSlide(slideName: string): Promise<void> {
 
     installDependencies(slidePath);
 
-    execSync(`pnpm build --base /slides/${slideName}/`, {
-      cwd: slidePath,
-      stdio: "inherit",
-    });
+    execSync(
+      `pnpm dlx @slidev/cli build slides.md --base /slides/${slideName}/ `,
+      {
+        cwd: slidePath,
+        stdio: "inherit",
+      }
+    );
 
     await removeDir(targetPath);
     await mkdir(path.dirname(targetPath), { recursive: true });
