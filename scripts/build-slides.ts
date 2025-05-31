@@ -5,6 +5,22 @@ import path from "path";
 const slidesDir = path.resolve(__dirname, "../slides");
 const publicDir = path.resolve(__dirname, "../public/slides");
 
+function installDependencies(slidePath: string) {
+  try {
+    console.log(`📥 Installing dependencies for ${slidePath}`);
+    execSync("pnpm install --frozen-lockfile", {
+      cwd: slidePath,
+      stdio: "inherit",
+    });
+  } catch (error) {
+    console.log(`⚠️ Failed to install with frozen lockfile, trying without...`);
+    execSync("pnpm install", {
+      cwd: slidePath,
+      stdio: "inherit",
+    });
+  }
+}
+
 async function removeDir(targetPath: string) {
   try {
     await rm(targetPath, { recursive: true, force: true });
@@ -22,10 +38,8 @@ async function buildSlide(slideName: string): Promise<void> {
 
   try {
     console.log(`📥 Installing dependencies for ${slideName}`);
-    execSync("pnpm install --frozen-lockfile", {
-      cwd: slidePath,
-      stdio: "inherit",
-    });
+
+    installDependencies(slidePath);
 
     execSync(`pnpm build --base /slides/${slideName}/`, {
       cwd: slidePath,
