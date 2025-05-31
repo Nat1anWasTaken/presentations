@@ -17,4 +17,9 @@ export const slides: Slide[] = [
     description: "「何謂人工智慧」的簡介",
     href: "slides/self-learning-presentation",
   },
+  {
+    title: "語境式英文學習 App",
+    description: "一個幫助學習者在語境中學習英文的應用程式",
+    href: "slides/context-vocabulary-app",
+  },
 ];
