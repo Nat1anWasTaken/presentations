@@ -20,7 +20,7 @@ export function PresentationCard({ slide }: PresentationCardProps) {
         "bg-gray-800 \
          grid grid-cols-[2fr_1fr] \
          border-2 border-gray-700 rounded-md \
-         w-xs h-32\
+         w-md h-32\
          hover:bg-gray-700 hover:scale-105 transition-all duration-300 ease-in-out \
          cursor-pointer \
          overflow-hidden object-cover"
