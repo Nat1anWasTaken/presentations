@@ -13,7 +13,6 @@ async function removeDir(targetPath: string) {
   }
 }
 
-// 🛠️ Build a single Slidev presentation
 async function buildSlide(slideName: string): Promise<void> {
   const slidePath = path.join(slidesDir, slideName);
   const distPath = path.join(slidePath, "dist");
